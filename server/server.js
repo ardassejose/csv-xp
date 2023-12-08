@@ -50,9 +50,7 @@ app.post("/assessores", (req, res) => {
 // Rota para obter os dados armazenados em /assessores (GET)
 app.get("/assessores", async (req, res) => {
   try {
-    const response = await fetch('https://api-csv-xp.onrender.com/assessores');
-    const data = await response.json();
-    res.json(data);
+    res.send(jsonData);
   } catch (error) {
     console.error("Erro ao obter dados:", error);
     res.status(500).json({ error: "Erro ao obter dados" });
