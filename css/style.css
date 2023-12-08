@@ -22,6 +22,40 @@ body {
 }
 
 .file-content {
-  display: none;
+  /* display: none; */
   white-space: pre-wrap;
+  padding-top: 20px;
+}
+
+.fileContent__response {
+  margin: 30px 0;
+  background-color: #f4f4f4;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  filter: drop-shadow(5px 5px 10px #dbdbdb);
+  border: 1px solid #7c7c7c8d;
+}
+
+.file-content p {
+  max-width: 100%;
+}
+
+button {
+  background-color: rgb(255, 149, 0);
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 10px;
+  transition: .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+button:hover {
+  background-color: rgb(199, 117, 1);
+  transform: scale(1.03);
 }

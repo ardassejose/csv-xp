@@ -4,23 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSV to JSON Converter</title>
+  <title>XLSX to JSON Converter</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <div id="drop-area" class="drop-area">
-    <p>Arraste e solte um arquivo CSV aqui ou clique para selecionar</p>
+    <p>Arraste e solte um arquivo CSV aqui</p>
     <input type="file" id="fileInput" class="file-input" accept=".csv">
-    <pre id="file-content" class="file-content"></pre>
+    
     <button id="sendButton" class="send-button">Enviar JSON para o Backend</button>
     <button id="deleteButton" class="delete-button">Deletar JSON do Backend</button>
+  </div>
+
+  <div class="fileContent__response">
+    <p id="file-content" class="file-content"></p>
   </div>
 
   <button id="fetchDataButton">Buscar conteúdo</button>
 
   <div id="responseFetchContent"></div>
   <script src="script/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
 </body>
 
 </html>
