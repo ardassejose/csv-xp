@@ -141,13 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function fetchAssessoresData() {
         // Fazer uma requisição GET para a rota /assessores no servidor
-        fetch('http://localhost:3000/assessores')
-            .then(response => response.json())
-            .then(data => {
-                // Mostrar os dados na tela (ajuste conforme necessário)
-                fileContent.textContent = JSON.stringify(data, null, 2);
-                fileContent.style.display = 'block';
-            })
-            .catch(error => console.error('Erro ao obter dados:', error));
+        fetch("https://api-csv-xp.onrender.com:3000/assessores")
+          .then((response) => response.json())
+          .then((data) => {
+            // Mostrar os dados na tela (ajuste conforme necessário)
+            fileContent.textContent = JSON.stringify(data, null, 2);
+            fileContent.style.display = "block";
+          })
+          .catch((error) => console.error("Erro ao obter dados:", error));
     }
 });
