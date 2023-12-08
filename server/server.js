@@ -21,6 +21,13 @@ app.options("/assessores", (req, res) => {
   res.status(200).send();
 });
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Permite qualquer origem. Substitua '*' pela sua origem real, se necessário.
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(express.json()); // Parse do corpo da requisição como JSON
 
@@ -41,9 +48,15 @@ app.post("/assessores", (req, res) => {
 });
 
 // Rota para obter os dados armazenados em /assessores (GET)
-app.get("/assessores", (req, res) => {
-  // Retorna os dados armazenados (ou qualquer outro processamento necessário)
-  res.json(storedData);
+app.get("/assessores", async (req, res) => {
+  try {
+    const response = await fetch("https://api-csv-xp.onrender.com/assessores");
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Erro ao obter dados:", error);
+    res.status(500).json({ error: "Erro ao obter dados" });
+  }
 });
 
 // Rota de Delete
