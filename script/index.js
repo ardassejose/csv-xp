@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function fetchAssessoresData() {
         // Fazer uma requisição GET para a rota /assessores no servidor
-        fetch("https://api-csv-xp.onrender.com:3000/assessores")
+        fetch("https://api-csv-xp.onrender.com/assessores")
           .then((response) => response.json())
           .then((data) => {
             // Mostrar os dados na tela (ajuste conforme necessário)
