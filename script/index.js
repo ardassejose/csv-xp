@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("JSON enviado com sucesso para o backend!");
+          window.alert("JSON enviado com sucesso para o backend!");
         } else {
           console.error(
             "Erro na resposta do servidor:",
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message); // Mensagem do servidor após excluir os arquivos
+        window.alert(data.message); // Mensagem do servidor após excluir os arquivos
         jsonData = null; // Define jsonData como null após a exclusão (ou ajuste conforme necessário)
         fileContent.textContent = ""; // Limpa o conteúdo exibido
         fileContent.style.display = "none";
@@ -154,10 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function fetchAssessoresData() {
     // Fazer uma requisição GET para a rota /assessores no servidor
     fetch("https://api-csv-xp.onrender.com/assessores", {
-      method: "GET",
-      headers: {
-        Origin: "*", // Substitua "your-origin-url" pela URL real da sua aplicação
-      },
+      method: "GET"
     })
       .then((response) => response.json())
       .then((data) => {
