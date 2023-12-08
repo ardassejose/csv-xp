@@ -45,16 +45,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function handleFile(file) {
-        const reader = new FileReader();
+      const reader = new FileReader();
 
-        reader.onload = (event) => {
-            const csvData = event.target.result;
-            jsonData = convertCSVtoJSON(csvData);
-            fileContent.textContent = JSON.stringify(jsonData, null, 2);
-            fileContent.style.display = 'block';
-        };
+      reader.onload = (event) => {
+        const fileData = event.target.result;
+        const fileType = getFileType(file);
 
-        reader.readAsText(file);
+        if (fileType === "csv") {
+          jsonData = convertCSVtoJSON(fileData);
+        } else if (fileType === "xlsx") {
+          jsonData = convertXLSXtoJSON(fileData);
+        }
+
+        fileContent.textContent = "Arquivo recebido!"
+        // fileContent.style.display = "block";
+      };
+
+      reader.readAsText(file);
+    }
+
+    function getFileType(file) {
+      const fileName = file.name;
+      const fileExtension = fileName.split(".").pop().toLowerCase();
+
+      if (fileExtension === "csv") {
+        return "csv";
+      } else if (fileExtension === "xlsx") {
+        return "xlsx";
+      } else {
+        // Pode adicionar suporte para outros tipos de arquivo conforme necessário
+        alert("Tipo de arquivo não suportado");
+        return null;
+      }
     }
 
     function convertCSVtoJSON(csvData) {
@@ -75,6 +97,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         return jsonData;
+    }
+
+    function convertXLSXtoJSON(xlsxData) {
+      const workbook = XLSX.read(xlsxData, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+
+      console.log(XLSX.utils.sheet_to_json(sheet));
+      return XLSX.utils.sheet_to_json(sheet);
     }
 
     function sendJSONToBackend(jsonData) {
@@ -114,8 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 // Mostrar os dados na tela (ajuste conforme necessário)
-                responseFetchContent.textContent = JSON.stringify(data, null, 2);
-                responseFetchContent.style.display = 'block';
+                fileContent.textContent = JSON.stringify(data, null, 2);
+                fileContent.style.display = 'block';
             })
             .catch(error => console.error('Erro ao obter dados:', error));
     }
