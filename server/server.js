@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: null,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -39,7 +39,6 @@ app.post("/assessores", (req, res) => {
   try {
     const jsonData = req.body;
     storedData = jsonData;
-    res.header("Access-Control-Allow-Origin", "*");
     res.json({ message: "Dados recebidos com sucesso!" });
   } catch (error) {
     console.error("Erro ao processar a requisição POST:", error);
@@ -50,9 +49,7 @@ app.post("/assessores", (req, res) => {
 // Rota para obter os dados armazenados em /assessores (GET)
 app.get("/assessores", async (req, res) => {
   try {
-    const jsonData = req.body;
-    storedData = jsonData;
-    res.send(storedData);
+    res.json(storedData || {}); // Responder com os dados armazenados ou um objeto vazio
   } catch (error) {
     console.error("Erro ao obter dados:", error);
     res.status(500).json({ error: "Erro ao obter dados" });

@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendButton = document.getElementById("sendButton");
   const deleteButton = document.getElementById("deleteButton");
   const fetchDataButton = document.getElementById("fetchDataButton");
-  const responseFetchContent = document.getElementById("responseFetchContent");
 
   let jsonData = null;
 
@@ -51,14 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const fileData = event.target.result;
       const fileType = getFileType(file);
 
-      if (fileType === "csv") {
-        jsonData = convertCSVtoJSON(fileData);
-      } else if (fileType === "xlsx") {
-        jsonData = convertXLSXtoJSON(fileData);
+      if (fileType === "csv" || fileType === "xlsx") {
+        jsonData = convertFileToJSON(fileData, fileType);
+        fileContent.textContent = "Arquivo recebido!";
+      } else {
+        alert("Tipo de arquivo não suportado");
+        jsonData = null;
       }
-
-      fileContent.textContent = "Arquivo recebido!";
-      // fileContent.style.display = "block";
     };
 
     reader.readAsText(file);
@@ -68,21 +66,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const fileName = file.name;
     const fileExtension = fileName.split(".").pop().toLowerCase();
 
-    if (fileExtension === "csv") {
-      return "csv";
-    } else if (fileExtension === "xlsx") {
-      return "xlsx";
-    } else {
-      // Pode adicionar suporte para outros tipos de arquivo conforme necessário
-      alert("Tipo de arquivo não suportado");
-      return null;
+    if (fileExtension === "csv" || fileExtension === "xlsx") {
+      return fileExtension;
     }
+
+    return null;
+  }
+
+  function convertFileToJSON(fileData, fileType) {
+    if (fileType === "csv") {
+      return convertCSVtoJSON(fileData);
+    } else if (fileType === "xlsx") {
+      return convertXLSXtoJSON(fileData);
+    }
+
+    return null;
   }
 
   function convertCSVtoJSON(csvData) {
     const lines = csvData.split("\n");
     const headers = lines[0].split(",");
-
     const jsonData = [];
 
     for (let i = 1; i < lines.length; i++) {
@@ -104,64 +107,75 @@ document.addEventListener("DOMContentLoaded", () => {
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
 
-    console.log(XLSX.utils.sheet_to_json(sheet));
     return XLSX.utils.sheet_to_json(sheet);
   }
 
   function sendJSONToBackend(jsonData) {
-    const url = "https://api-csv-xp.onrender.com/assessores"; // Substitua com a rota do seu backend
-
-    fetch(url, {
+    fetch("http://localhost:3000/assessores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(jsonData),
-      credentials: "omit",
     })
       .then((response) => {
         if (response.ok) {
-          window.alert("JSON enviado com sucesso para o backend!");
+          return response.json();
         } else {
-          console.error(
-            "Erro na resposta do servidor:",
-            response.status,
-            response.statusText
+          throw new Error(
+            `Erro na resposta do servidor: ${response.status} ${response.statusText}`
           );
         }
+      })
+      .then((data) => {
+        window.alert("JSON enviado para o backend com sucesso!");
       })
       .catch((error) => {
         console.error("Erro na solicitação POST:", error);
       });
-      console.log(jsonData)
   }
 
   function deleteFiles() {
-    // Código para fazer uma requisição DELETE para o servidor
-    fetch("https://api-csv-xp.onrender.com/delete-assessores", {
+    fetch("http://localhost:3000/delete-assessores", {
       method: "DELETE",
-      credentials: "omit",
     })
-      .then((response) => response.json())
-      .then((data) => {
-        window.alert(data.message); // Mensagem do servidor após excluir os arquivos
-        jsonData = null; // Define jsonData como null após a exclusão (ou ajuste conforme necessário)
-        fileContent.textContent = ""; // Limpa o conteúdo exibido
-        fileContent.style.display = "none";
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(
+            `Erro ao excluir arquivos: ${response.status} ${response.statusText}`
+          );
+        }
       })
-      .catch((error) => console.error("Erro ao excluir arquivos:", error));
+      .then((data) => {
+        window.alert(data.message);
+        jsonData = null;
+        fileContent.textContent = "";
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir arquivos:", error);
+      });
   }
 
   function fetchAssessoresData() {
-    // Fazer uma requisição GET para a rota /assessores no servidor
-    fetch("https://api-csv-xp.onrender.com/assessores", {
-      method: "GET"
+    fetch("http://localhost:3000/assessores", {
+      method: "GET",
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // Mostrar os dados na tela (ajuste conforme necessário)
-        fileContent.textContent = JSON.stringify(data, null, 2);
-        fileContent.style.display = "block";
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(
+            `Erro na resposta do servidor: ${response.status} ${response.statusText}`
+          );
+        }
       })
+      .then((data) => {
+        fileContent.textContent = JSON.stringify(data, null, 2);
+      })
+      .catch((error) => {
+        console.error("Erro ao obter dados:", error);
+      });
   }
 });
