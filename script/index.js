@@ -140,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("https://api-csv-xp.onrender.com/delete-assessores", {
       method: "DELETE",
       credentials: "omit",
-      mode: "no-cors",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -157,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("https://api-csv-xp.onrender.com/assessores", {
       method: "GET",
       headers: {
-        Origin: "https://api-csv-xp.onrender.com/assessores", // Substitua "your-origin-url" pela URL real da sua aplicação
+        Origin: "*", // Substitua "your-origin-url" pela URL real da sua aplicação
       },
     })
       .then((response) => response.json())
