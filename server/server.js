@@ -8,7 +8,7 @@ const port = 3000;
 // Adicione o middleware CORS para permitir solicitações de qualquer origem
 app.use(
   cors({
-    origin: "https://api-csv-xp.onrender.com/",
+    origin: null,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
   })
 );
