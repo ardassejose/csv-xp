@@ -10,6 +10,8 @@
 </head>
 
 <body>
+  <h1>API CSV - XP Inc.</h1>
+
   <div id="drop-area" class="drop-area">
     <p>Arraste e solte um arquivo CSV aqui</p>
     <input type="file" id="fileInput" class="file-input" accept=".csv">
@@ -25,6 +27,36 @@
   <button id="fetchDataButton">Buscar conteúdo</button>
 
   <div id="responseFetchContent"></div>
+
+  <div class="documentation">
+    <p>
+      Este projeto é um servidor Node.js que fornece endpoints para receber, armazenar e manipular dados relacionados a
+      assessores financeiros. Ele oferece funcionalidades básicas de CRUD (Create, Read, Update, Delete) para operações de
+      dados, permitindo que o frontend envie dados JSON por meio de uma solicitação POST, obtenha esses dados por meio de
+      uma
+      solicitação GET, e delete os dados por meio de uma solicitação DELETE.
+      <br><br>
+      O funcionamento básico do projeto é o seguinte:
+      <br><br>
+      1. <b>Envio de Dados (POST):</b> O frontend pode enviar dados no formato JSON para o servidor por meio da rota `POST
+      /assessores`. Os dados são então armazenados no servidor para posterior recuperação.
+      <br><br>
+      2. <b>Recuperação de Dados (GET):</b> O frontend pode solicitar os dados armazenados no servidor por meio da rota `GET
+      /assessores`. O servidor responde com os dados armazenados, se houver algum.
+      <br><br>
+      3. <b>Exclusão de Dados (DELETE):</b> O frontend pode solicitar a exclusão dos dados armazenados no servidor por meio da
+      rota `DELETE /delete-assessores`. Isso resulta na remoção dos dados armazenados.
+      <br><br>
+      O projeto incorpora também as configurações CORS (Cross-Origin Resource Sharing) para permitir solicitações do
+      frontend,
+      independentemente da origem do domínio. Além disso, utiliza o middleware `body-parser` para analisar dados JSON
+      enviados
+      nas solicitações.
+      <br><br>
+      Este servidor básico fornece uma estrutura simples para a manipulação de dados de assessores financeiros, e pode ser
+      expandido e integrado com um frontend correspondente para criar uma aplicação completa de gerenciamento de assessores.
+    </p>
+  </div>
   <script src="script/index.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 

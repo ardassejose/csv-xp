@@ -1,5 +1,6 @@
 body {
   font-family: Arial, sans-serif;
+  background: #e6e6e6;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,6 +8,16 @@ body {
   height: 100vh;
   margin: 0;
   scroll-behavior: smooth;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 0 20px;
+}
+
+h1 {
+  background-color: #f7f7f7;
+  padding: 30px;
+  border-radius: 20px;
+  color: #000;
+  font-size: 30px;
 }
 
 .drop-area {
@@ -58,4 +69,19 @@ button {
 button:hover {
   background-color: rgb(199, 117, 1);
   transform: scale(1.03);
+}
+
+.documentation {
+  width: 100%;
+  height: 300px;
+  margin-top: 20px;
+  max-width: 900px;
+  background-color: #d7d7d7;
+  border-radius: 20px;
+  overflow-y: scroll;
+}
+
+.documentation p {
+  color: #6b6b6b;
+  padding: 20px;
 }

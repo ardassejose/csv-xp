@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function sendJSONToBackend(jsonData) {
-    fetch("http://localhost:3000/assessores", {
+    fetch("https://api-csv-xp.onrender.com/assessores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function deleteFiles() {
-    fetch("http://localhost:3000/delete-assessores", {
+    fetch("https://api-csv-xp.onrender.com/delete-assessores", {
       method: "DELETE",
     })
       .then((response) => {
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function fetchAssessoresData() {
-    fetch("http://localhost:3000/assessores", {
+    fetch("https://api-csv-xp.onrender.com/assessores", {
       method: "GET",
     })
       .then((response) => {
