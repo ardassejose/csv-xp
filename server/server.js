@@ -24,6 +24,7 @@ app.post("/assessores", (req, res) => {
   try {
     const jsonData = req.body;
     storedData = jsonData;
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({ message: "Dados recebidos com sucesso!" });
   } catch (error) {
     console.error("Erro ao processar a requisição POST:", error);
