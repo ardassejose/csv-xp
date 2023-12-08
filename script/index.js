@@ -109,20 +109,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sendJSONToBackend(jsonData) {
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        const url = "https://api-csv-xp.onrender.com/assessores"; // Substitua com a rota do seu backend
+      const url = "https://api-csv-xp.onrender.com/assessores"; // Substitua com a rota do seu backend
 
-        xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log('JSON enviado com sucesso para o backend!');
-            }
-        };
-
-        xhr.send(JSON.stringify(jsonData));
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+        credentials: "include",
+        mode: "no-cors"
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("JSON enviado com sucesso para o backend!");
+          } else {
+            console.error(
+              "Erro na resposta do servidor:",
+              response.status,
+              response.statusText
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Erro na solicitação POST:", error);
+        });
     }
 
     function deleteFiles() {
@@ -142,7 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function fetchAssessoresData() {
         // Fazer uma requisição GET para a rota /assessores no servidor
-        fetch("https://api-csv-xp.onrender.com/assessores")
+        fetch("https://api-csv-xp.onrender.com/assessores", {
+          method: "GET",
+          credentials: "include",
+          mode: "no-cors",
+        })
           .then((response) => response.json())
           .then((data) => {
             // Mostrar os dados na tela (ajuste conforme necessário)
