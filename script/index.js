@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function sendJSONToBackend(jsonData) {
         const xhr = new XMLHttpRequest();
-        const url = 'http://localhost:3000/assessores'; // Substitua com a rota do seu backend
+        const url = "https://api-csv-xp.onrender.com/assessores"; // Substitua com a rota do seu backend
 
         xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -126,17 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function deleteFiles() {
         // Código para fazer uma requisição DELETE para o servidor
-        fetch('http://localhost:3000/delete-assessores', {
-            method: 'DELETE',
+        fetch("https://api-csv-xp.onrender.com/delete-assessores", {
+          method: "DELETE",
         })
-        .then(response => response.json())
-        .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
             console.log(data.message); // Mensagem do servidor após excluir os arquivos
             jsonData = null; // Define jsonData como null após a exclusão (ou ajuste conforme necessário)
-            fileContent.textContent = ''; // Limpa o conteúdo exibido
-            fileContent.style.display = 'none';
-        })
-        .catch(error => console.error('Erro ao excluir arquivos:', error));
+            fileContent.textContent = ""; // Limpa o conteúdo exibido
+            fileContent.style.display = "none";
+          })
+          .catch((error) => console.error("Erro ao excluir arquivos:", error));
     }
 
     function fetchAssessoresData() {
