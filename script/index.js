@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function sendJSONToBackend(jsonData) {
         const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
         const url = "https://api-csv-xp.onrender.com/assessores"; // Substitua com a rota do seu backend
 
         xhr.open('POST', url, true);

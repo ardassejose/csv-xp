@@ -9,7 +9,8 @@ const port = 3000;
 app.use(
   cors({
     origin: null,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true
   })
 );
 app.use(bodyParser.json({ limit: "10mb" }));
