@@ -50,7 +50,9 @@ app.post("/assessores", (req, res) => {
 // Rota para obter os dados armazenados em /assessores (GET)
 app.get("/assessores", async (req, res) => {
   try {
-    res.send(jsonData);
+    const jsonData = req.body;
+    storedData = jsonData;
+    res.send(storedData);
   } catch (error) {
     console.error("Erro ao obter dados:", error);
     res.status(500).json({ error: "Erro ao obter dados" });
