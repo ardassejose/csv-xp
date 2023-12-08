@@ -15,7 +15,7 @@ app.use(
 );
 
 app.options("/assessores", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://api-csv-xp.onrender.com/");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.status(200).send();
