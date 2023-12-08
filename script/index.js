@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => {
         console.error("Erro na solicitação POST:", error);
       });
+      console.log(jsonData)
   }
 
   function deleteFiles() {
