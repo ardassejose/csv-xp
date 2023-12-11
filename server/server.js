@@ -7,6 +7,7 @@ const app = express();
 const port = 3000;
 // Gera uma chave aleatória para criptografia
 const encryptionKey = crypto.randomBytes(32);
+const jwtSecret = crypto.randomBytes(64).toString("hex");
 
 // Adicione o middleware CORS para permitir solicitações de qualquer origem
 app.use(
@@ -70,10 +71,49 @@ app.post("/assessores", (req, res) => {
   }
 });
 
-// Rota para obter os dados armazenados em /assessores (GET)
-app.get("/assessores", async (req, res) => {
+// Lista de URLs permitidas para a rota GET /assessores
+const allowedURLs = [
+  "http://localhost:3000/assessores",
+  // "https://api-csv-xp.onrender.com/assessores",
+  // "http://127.0.0.1:5500/assessores",
+];
+
+// Middleware para verificar se a requisição GET está em uma URL permitida
+const allowGetAssessores = (req, res, next) => {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({ error: "Token não fornecido" });
+  }
+
   try {
-    res.json(storedData || {}); // Responder com os dados armazenados ou um objeto vazio
+    const decoded = jwt.verify(token, jwtSecret);
+    const requestedOrigin = decoded.origin;
+
+    if (req.method === "GET" && allowedURLs.includes(requestedOrigin)) {
+      next();
+    } else {
+      res.status(403).json({ error: "Acesso proibido" });
+    }
+  } catch (error) {
+    res.status(401).json({ error: "Token inválido" });
+  }
+};
+
+// Adicione o middleware de autenticação à rota GET /assessores
+app.get("/assessores", allowGetAssessores, async (req, res) => {
+  try {
+    // Verifique se há dados criptografados antes de tentar descriptografar
+    if (storedData) {
+      // Descriptografa os dados antes de enviá-los como resposta
+      const decryptedData = decryptData(
+        storedData.encryptedData,
+        storedData.iv
+      );
+      res.json(decryptedData);
+    } else {
+      res.json({}); // Se não houver dados armazenados, responda com um objeto vazio
+    }
   } catch (error) {
     console.error("Erro ao obter dados:", error);
     res.status(500).json({ error: "Erro ao obter dados" });
@@ -90,3 +130,5 @@ app.delete("/delete-assessores", (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor Node.js rodando na porta: ${port}`);
 });
+
+module.exports = decryptData;
