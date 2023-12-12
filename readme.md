@@ -79,3 +79,5 @@ Para aprimorar a segurança dos dados, a biblioteca `crypto` foi inserida para c
 - Consulte a [documentação do Express](https://expressjs.com/) para mais detalhes sobre o framework.
 
 Ao seguir este guia, você deve ser capaz de configurar e utilizar o servidor Node.js fornecido.
+
+Desenvolvido por José Víctor Ardasse 🚀
