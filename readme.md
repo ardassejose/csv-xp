@@ -41,31 +41,13 @@ O servidor será iniciado e estará disponível em `http://localhost:3000`.
 
 Esta rota permite a adição de dados de assessores. Os dados devem ser enviados no corpo da requisição no formato JSON.
 
-Exemplo de requisição:
-
-```bash
-curl -X POST -H "Content-Type: application/json" -d '{"nome": "João", "cargo": "Assessor"}' http://localhost:3000/assessores
-```
-
 ### GET /assessores
 
 Esta rota retorna os dados armazenados relacionados aos assessores.
 
-Exemplo de requisição:
-
-```bash
-curl http://localhost:3000/assessores
-```
-
 ### DELETE /delete-assessores
 
 Esta rota deleta os dados armazenados sobre os assessores.
-
-Exemplo de requisição:
-
-```bash
-curl -X DELETE http://localhost:3000/delete-assessores
-```
 
 ## Middlewares
 
@@ -76,6 +58,18 @@ O servidor utiliza o middleware `cors` para lidar com a política de mesma orige
 ### Body Parser
 
 O middleware `body-parser` é utilizado para analisar o corpo das requisições como JSON, limitando o tamanho para 10 MB.
+
+## Em desenvolvimento
+
+## Criptografia de JSON
+
+Para aprimorar a segurança dos dados, a biblioteca `crypto` foi inserida para criptografar e decodificar o JSON.
+
+<img src="utils/assets/img1-cripto.jpg" />
+
+- // Rota para receber a requisição do body e encriptar as informações
+
+<img src="utils/assets/img2-post.jpg" />
 
 ## Notas
 
