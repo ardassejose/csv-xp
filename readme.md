@@ -4,7 +4,7 @@ Este documento descreve o funcionamento e as rotas do servidor Node.js fornecido
 
 ## Requisitos do Sistema
 
-- [Node.js](https://nodejs.org/) (v14.x ou superior)
+- [Node.js](https://nodejs.org/) (v18.x ou superior)
 - [npm](https://www.npmjs.com/) (gerenciador de pacotes para Node.js)
 
 ## Instalação
